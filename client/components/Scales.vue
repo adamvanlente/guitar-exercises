@@ -12,7 +12,8 @@
     </div>
 
     <div class="scale-labels">
-      <label> {{ currentExercise.type }}</label>
+      <label v-bind:class="[currentExercise.type == 'Pentatonic' ? 'pent-style' : '',
+                            currentExercise.type == 'Standard' ? 'standard-style' : '']">{{ currentExercise.type }}</label>
       <label> {{ currentExercise.shape }} Shape</label>
     </div>
 
@@ -80,6 +81,16 @@ export default {
     text-transform: uppercase;
     margin: 4px;
     display: inline-block;
+  }
+
+  .pent-style {
+    background: orange !important;
+    color: #333 !important;
+  }
+
+  .standard-style {
+    background: #595994 !important;
+    color: white !important;
   }
 
 </style>

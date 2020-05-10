@@ -103,4 +103,9 @@ export default {
     padding-top: 48px;
     border-top: 2px solid #d8d8d8;
   }
+
+  .scale-labels label {
+    background: #333;
+    color: white;
+  }
 </style>
