@@ -160,5 +160,6 @@ export default {
     right: 0;
     padding-top: 48px;
     border-top: 2px solid #d8d8d8;
+    overflow: scroll;
   }
 </style>
