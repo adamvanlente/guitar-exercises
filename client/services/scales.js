@@ -38,7 +38,7 @@ const SCALE_TYPES = [
     type: 'Pentatonic',
     notes: [0, 2, 4, 7, 9],
     relative: {
-      name: 'Minor Pentatonic',
+      name: 'Minor',
       index: 9
     }
   },
@@ -47,7 +47,7 @@ const SCALE_TYPES = [
     type: 'Pentatonic',
     notes: [0, 3, 5, 7, 10],
     relative: {
-      name: 'Major Pentatonic',
+      name: 'Major',
       index: 3
     }
   }
@@ -84,8 +84,13 @@ const getScale = (index, key) => {
         scaleChords[chordType].push(`${note}${chord}`)
       }
     }
-
   })
+
+  let relative = {}
+  if (scale.relative) {
+    relative.name = scale.relative.name
+    relative.note = key[scale.relative.index]
+  }
 
   let keyName = key[0]
   if (scale.name === 'MINOR') keyName = `${keyName}m`
@@ -97,7 +102,7 @@ const getScale = (index, key) => {
     shape: getRandomShape(),
     notes: scaleNotes,
     chords: scaleChords,
-    relative: scale.relative
+    relative: relative
   }
 }
 

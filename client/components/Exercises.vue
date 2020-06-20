@@ -2,7 +2,10 @@
   <div class="wrapper">
 
     <div class="available-modes">
-      <span class="mode-name" v-bind:class="[mode == availableMode ? 'selected-mode' : '']" v-on:click="mode = availableMode" v-for="availableMode in availableModes">{{ availableMode }}</span>
+      <span class="mode-name"
+            v-bind:class="[mode == availableMode ? 'selected-mode' : '']"
+            v-on:click="mode = availableMode"
+            v-for="availableMode in availableModes">{{ availableMode }}</span>
     </div>
 
     <div class="refresh-wrapper">
@@ -18,6 +21,7 @@
     <div class="exercise-wrapper" v-if="currentExercise">
       <Scales v-if="mode == availableModes.SCALE"></Scales>
       <Chords v-if="mode == availableModes.CHORD"></Chords>
+      <Arpeggios v-if="mode == availableModes.ARPEGGIO"></Arpeggios>
     </div>
 
   </div>
@@ -27,14 +31,17 @@
 
 const MODES = {
   SCALE: 'Scale Exercise',
-  CHORD: 'Chord Exercise'
+  // CHORD: 'Chord Exercise',
+  ARPEGGIO: 'Arpeggio Exercise'
 }
 
 import Scales from './Scales'
 import Chords from './Chords'
+import Arpeggios from './Arpeggios'
 
 import { getRandomScale } from '../services/scales'
 import { getRandomChord } from '../services/chords'
+import { getRandomArpeggios } from '../services/arpeggios'
 
 export default {
   data() {
@@ -49,7 +56,8 @@ export default {
   },
   components: {
     Scales,
-    Chords
+    Chords,
+    Arpeggios
   },
   mounted() {
     let storedMode = window.localStorage.getItem('guitarExerciseMode')
@@ -59,13 +67,11 @@ export default {
   methods: {
     getExercise() {
       let exercise
-      if (this.mode == this.availableModes.SCALE) {
-        exercise = getRandomScale()
-      } else {
-        exercise = getRandomChord()
-      }
+      if (this.mode == this.availableModes.SCALE) exercise = getRandomScale()
+      if (this.mode == this.availableModes.CHORD) exercise = getRandomChord()
+      if (this.mode == this.availableModes.ARPEGGIO) exercise = getRandomArpeggios()
 
-      this.$store.commit('setCurrentExercise', exercise)
+      if (exercise) this.$store.commit('setCurrentExercise', exercise)
     },
     setTimer() {
       let self = this

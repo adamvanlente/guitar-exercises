@@ -27,11 +27,6 @@ const CHORD_TYPES = [
     symbol: 'm7',
     notes: [0, 3, 7, 11]
   },
-  // {
-  //   name: 'add9',
-  //   symbol: 'add9',
-  //   notes: [0, 4, 7, 2]
-  // },
   {
     name: '9',
     symbol: '9',
@@ -58,6 +53,8 @@ const CHORD_TYPES = [
     notes: [0, 10, 2, 5, 9]
   }
 ]
+
+// https://www.jazzguitar.be/blog/jazz-chord-progressions/
 
 const CHORD_PROGRESSIONS = [
   {
@@ -87,7 +84,7 @@ const CHORD_PROGRESSIONS = [
   {
     name: 'II-V-I',
     chordIndices: [1, 4, 0]
-  },
+  }
 ]
 
 

@@ -1,3 +1,15 @@
+// 0 = Root
+// 1 = b2
+// 2 = 2nd (9th)
+// 3 = b3
+// 4 = 3rd
+// 5 = 4th
+// 6 = b5
+// 7 = 5th
+// 8 = b6th
+// 9 = 6th
+// 10 = b7
+// 11 = 7th
 const ALL_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'B♭', 'B']
 
 const getRandomKey = () => {

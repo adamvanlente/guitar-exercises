@@ -17,6 +17,12 @@
       <label> {{ currentExercise.shape }} Shape</label>
     </div>
 
+    <div class="relative-notes" v-if="currentExercise.relative">
+      <div>
+        {{currentExercise.key}}'s relative {{ currentExercise.relative.name }} is {{ currentExercise.relative.note }}<label v-if="currentExercise.relative.name == 'Minor'">m</label>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -84,13 +90,19 @@ export default {
   }
 
   .pent-style {
-    background: orange !important;
-    color: #333 !important;
+    color: #ff2121 !important;
+    border: 1px solid #ff2121;
   }
 
   .standard-style {
-    background: #595994 !important;
-    color: white !important;
+    color: #595994 !important;
+    border: 1px solid #595994;
+  }
+
+  .relative-notes {
+    font-size: 13px;
+    margin: 12px;
+    color: #999a9a;
   }
 
 </style>
