@@ -12,7 +12,9 @@
 
       <button class="refresh-button" v-on:click="getExercise()">New {{ mode }}</button>
 
+
       <div v-if="!timerOn" class="auto-refresh" v-on:click="timerOn = true">Turn on auto refresh </div>
+      <div v-if="timerOn" class="total-time-elapsed">{{ Number(totalTime / 60).toFixed(0) }} minutes elapsed</div>
       <div v-if="timerOn" class="auto-refresh">New exercise in {{ timerLength - timer }} seconds</div>
       <div v-if="timerOn" class="stop-refresh" v-on:click="timerOn = false">Stop auto refresh</div>
 
@@ -53,6 +55,7 @@ export default {
       timerLength: 120,
       timerOn: false,
       timer: 0,
+      totalTime: 0,
       timerCounter: undefined
     }
   },
@@ -79,6 +82,7 @@ export default {
       let self = this
       this.timerCounter = setInterval(() => {
         self.timer = self.timer + 1
+        self.totalTime = self.totalTime + 1
         if (self.timer == self.timerLength) {
           self.timer = 0
           self.getExercise()
@@ -88,6 +92,7 @@ export default {
     stopTimer() {
       window.clearInterval(this.timerCounter)
       this.timer = 0
+      this.totalTime = 0
       this.timerOn = false
     }
   },
@@ -150,7 +155,7 @@ export default {
   }
 
   .stop-refresh {
-    color: #333;
+    color: #f95454;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -161,7 +166,7 @@ export default {
   .exercise-wrapper {
     margin-top: 48px;
     position: fixed;
-    top: 150px;
+    top: 225px;
     background: rgba(236, 236, 236, 0.3);
     bottom: 0;
     left: 0;
@@ -169,5 +174,18 @@ export default {
     padding-top: 48px;
     border-top: 2px solid #d8d8d8;
     overflow: scroll;
+  }
+
+  .total-time-elapsed {
+    display: block;
+    width: 300px;
+    right: 0;
+    top: 0;
+    padding: 6px;
+    font-size: 12px;
+    background: rgb(0 0 255 / 9%);
+    margin: 12px auto;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 </style>

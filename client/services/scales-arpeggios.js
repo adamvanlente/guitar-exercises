@@ -72,7 +72,7 @@ const SCALE_TYPES = [
   {
     name: 'MAJOR add 9',
     type: 'IONIAN',
-    notes: [0, 4, 7, 2 ],
+    notes: [0, 2, 4, 7],
     relative: {
       name: 'Minor',
       index: 9

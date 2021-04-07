@@ -95,15 +95,6 @@ export default {
     cursor: pointer;
   }
 
-  .stop-refresh {
-    color: #333;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    opacity: 0.7;
-    cursor: pointer;
-  }
-
   .chord-notes {
     font-size: 12px;
     margin-top: 24px;
@@ -116,19 +107,6 @@ export default {
     padding: 2px 7px;
     border-radius: 4px;
     color: #4a4747;
-  }
-
-  .exercise-wrapper {
-    margin-top: 48px;
-    position: fixed;
-    top: 150px;
-    background: rgba(236, 236, 236, 0.3);
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding-top: 48px;
-    border-top: 2px solid #d8d8d8;
-    overflow: scroll;
   }
 
   .chord-labels label {
