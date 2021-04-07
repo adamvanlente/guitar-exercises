@@ -1,6 +1,9 @@
 <template>
   <div class="wrapper">
 
+
+    <div class="total-time-elapsed">{{ Number(totalTime / 60).toFixed(0) }} mins practicing</div>
+
     <div class="available-modes">
       <span class="mode-name"
             v-bind:class="[mode == availableMode ? 'selected-mode' : '']"
@@ -14,7 +17,6 @@
 
 
       <div v-if="!timerOn" class="auto-refresh" v-on:click="timerOn = true">Turn on auto refresh </div>
-      <div v-if="timerOn" class="total-time-elapsed">{{ Number(totalTime / 60).toFixed(0) }} minutes elapsed</div>
       <div v-if="timerOn" class="auto-refresh">New exercise in {{ timerLength - timer }} seconds</div>
       <div v-if="timerOn" class="stop-refresh" v-on:click="timerOn = false">Stop auto refresh</div>
 
@@ -68,6 +70,11 @@ export default {
     let storedMode = window.localStorage.getItem('guitarExerciseMode')
     if (storedMode) this.mode = storedMode
     this.getExercise()
+
+    let self = this
+    setInterval(() => {
+      self.totalTime = self.totalTime + 1
+    }, 1000)
   },
   methods: {
     getExercise() {
@@ -82,7 +89,6 @@ export default {
       let self = this
       this.timerCounter = setInterval(() => {
         self.timer = self.timer + 1
-        self.totalTime = self.totalTime + 1
         if (self.timer == self.timerLength) {
           self.timer = 0
           self.getExercise()
@@ -92,7 +98,6 @@ export default {
     stopTimer() {
       window.clearInterval(this.timerCounter)
       this.timer = 0
-      this.totalTime = 0
       this.timerOn = false
     }
   },
@@ -178,13 +183,13 @@ export default {
 
   .total-time-elapsed {
     display: block;
-    width: 300px;
+    position: fixed;
     right: 0;
     top: 0;
     padding: 6px;
     font-size: 12px;
     background: rgb(0 0 255 / 9%);
-    margin: 12px auto;
+    margin: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
