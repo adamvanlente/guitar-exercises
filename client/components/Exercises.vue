@@ -37,11 +37,13 @@ const MODES = {
 
 import Scales from './Scales'
 import Chords from './Chords'
-import Arpeggios from './Arpeggios'
+import Arpeggios from './Scales-Arpeggios'
+// import Arpeggios from './Arpeggios'
 
 import { getRandomScale } from '../services/scales'
 import { getRandomChord } from '../services/chords'
-import { getRandomArpeggios } from '../services/arpeggios'
+// import { getRandomArpeggios } from '../services/arpeggios'
+import { getRandomArpeggios } from '../services/scales-arpeggios'
 
 export default {
   data() {
