@@ -14,8 +14,11 @@
     <div class="refresh-wrapper">
 
       <button class="refresh-button" v-on:click="getExercise()">New {{ mode }}</button>
-
-
+      <div v-if="mode == 'Arpeggio Exercise'">
+        <span class="arpeggio-type"
+              v-bind:class="[selectedArpeggioScales.indexOf(scale) !== -1 ? 'selected-arpeggio' : '']"
+              v-for="scale in allArpeggioScaleTypes" v-on:click="updateSelectedScales(scale)">{{ scale }}</span>
+      </div>
       <div v-if="!timerOn" class="auto-refresh" v-on:click="timerOn = true">Turn on auto refresh </div>
       <div v-if="timerOn" class="auto-refresh">New exercise in {{ timerLength - timer }} seconds</div>
       <div v-if="timerOn" class="stop-refresh" v-on:click="timerOn = false">Stop auto refresh</div>
@@ -47,7 +50,7 @@ import Arpeggios from './Scales-Arpeggios'
 import { getRandomScale } from '../services/scales'
 import { getRandomChord } from '../services/chords'
 // import { getRandomArpeggios } from '../services/arpeggios'
-import { getRandomArpeggios } from '../services/scales-arpeggios'
+import { getRandomArpeggios, getAllScaleNames } from '../services/scales-arpeggios'
 
 export default {
   data() {
@@ -58,7 +61,9 @@ export default {
       timerOn: false,
       timer: 0,
       totalTime: 0,
-      timerCounter: undefined
+      timerCounter: undefined,
+      allArpeggioScaleTypes: [],
+      selectedArpeggioScales: []
     }
   },
   components: {
@@ -69,6 +74,10 @@ export default {
   mounted() {
     let storedMode = window.localStorage.getItem('guitarExerciseMode')
     if (storedMode) this.mode = storedMode
+
+    this.allArpeggioScaleTypes = getAllScaleNames()
+    this.resetArpeggioScales()
+
     this.getExercise()
 
     let self = this
@@ -81,7 +90,7 @@ export default {
       let exercise
       if (this.mode == this.availableModes.SCALE) exercise = getRandomScale()
       if (this.mode == this.availableModes.CHORD) exercise = getRandomChord()
-      if (this.mode == this.availableModes.ARPEGGIO) exercise = getRandomArpeggios()
+      if (this.mode == this.availableModes.ARPEGGIO) exercise = getRandomArpeggios(this.selectedArpeggioScales)
 
       if (exercise) this.$store.commit('setCurrentExercise', exercise)
     },
@@ -99,6 +108,26 @@ export default {
       window.clearInterval(this.timerCounter)
       this.timer = 0
       this.timerOn = false
+    },
+    updateSelectedScales(scale) {
+      let index = this.selectedArpeggioScales.indexOf(scale)
+      if (index == -1) {
+        this.selectedArpeggioScales.push(scale)
+      } else {
+        this.selectedArpeggioScales.splice(index, 1)
+      }
+
+      window.localStorage.setItem('selectedArpeggioScales', this.selectedArpeggioScales)
+    },
+    resetArpeggioScales() {
+
+      let selected = window.localStorage.getItem('selectedArpeggioScales')
+      if (selected) {
+        selected = selected.split(',')
+        this.selectedArpeggioScales = selected
+      } else {
+        this.selectedArpeggioScales = JSON.parse(JSON.stringify(this.allArpeggioScaleTypes))
+      }
     }
   },
   computed: {
@@ -184,8 +213,9 @@ export default {
   .total-time-elapsed {
     display: block;
     position: fixed;
-    right: 0;
-    top: 0;
+    right: 10%;
+    left: 10%;
+    bottom: 0;
     padding: 6px;
     font-size: 12px;
     background: rgb(0 0 255 / 9%);
@@ -193,4 +223,22 @@ export default {
     text-transform: uppercase;
     letter-spacing: 1px;
   }
+
+  .arpeggio-type {
+    display: inline-block;
+    font-size: 14px;
+    margin: 0 4px;
+    padding: 4px;
+    border: 1px solid;
+    border-radius: 1px;
+    color: gray;
+    opacity: 0.6;
+    cursor: pointer;
+  }
+
+  .selected-arpeggio {
+    background: #547dde;
+    color: white;
+  }
+
 </style>

@@ -16,7 +16,7 @@ import { getRandomKey, getAllKeys } from './notes'
 
 const SCALE_TYPES = [
   {
-    name: 'MAJOR',
+    name: 'MAJ',
     type: 'IONIAN',
     notes: [0, 4, 7],
     relative: {
@@ -25,7 +25,7 @@ const SCALE_TYPES = [
     }
   },
   {
-    name: 'MAJOR 6th',
+    name: 'MAJ 6th',
     type: 'IONIAN',
     notes: [0, 4, 7, 9],
     relative: {
@@ -34,7 +34,7 @@ const SCALE_TYPES = [
     }
   },
   {
-    name: 'MAJOR 7th',
+    name: 'MAJ 7th',
     type: 'IONIAN',
     notes: [0, 4, 7, 11],
     relative: {
@@ -43,7 +43,7 @@ const SCALE_TYPES = [
     }
   },
   {
-    name: 'MAJOR 6/9',
+    name: 'MAJ 6/9',
     type: 'IONIAN',
     notes: [0, 2, 4, 7, 9],
     relative: {
@@ -52,7 +52,7 @@ const SCALE_TYPES = [
     }
   },
   {
-    name: 'MAJOR 7b5',
+    name: 'MAJ 7b5',
     type: 'Lydian',
     notes: [0, 4, 6, 11],
     relative: {
@@ -61,7 +61,7 @@ const SCALE_TYPES = [
     }
   },
   {
-    name: 'MAJOR 7#5',
+    name: 'MAJ 7#5',
     type: 'Lydian',
     notes: [0, 4, 8, 11],
     relative: {
@@ -70,7 +70,7 @@ const SCALE_TYPES = [
     }
   },
   {
-    name: 'MAJOR add 9',
+    name: 'MAJ add 9',
     type: 'IONIAN',
     notes: [0, 2, 4, 7],
     relative: {
@@ -80,7 +80,7 @@ const SCALE_TYPES = [
   },
 
   {
-    name: 'MAJOR 9th',
+    name: 'MAJ 9th',
     type: 'IONIAN',
     notes: [0, 4, 7, 11, 2],
     relative: {
@@ -95,14 +95,39 @@ const getRandomShape = () => CAGED_POSITIONS[Math.floor(Math.random() * CAGED_PO
 
 const getRandomArpeggiosIndex = () => Math.floor(Math.random() * SCALE_TYPES.length)
 
-const getRandomArpeggios = () => {
-  let index = getRandomArpeggiosIndex()
-  return getScale(index)
+const getRandomArpeggios = (selectedArpeggios) => {
+  return getScale(selectedArpeggios)
 }
 
-const getScale = (index, key) => {
-  key = key || getRandomKey()
-  let scale = SCALE_TYPES[index]
+const getAllScaleNames = () => {
+  let arr = []
+  SCALE_TYPES.forEach(scale => {
+    arr.push(scale.name)
+  })
+
+  return arr
+}
+
+const getSelectedScaleTypes = (selectedArpeggios) => {
+  if (!selectedArpeggios) return SCALE_TYPES
+
+  let arr = []
+  SCALE_TYPES.forEach(scale => {
+    let index = selectedArpeggios.indexOf(scale.name)
+    if (index !== -1) {
+      arr.push(scale)
+    }
+  })
+
+  return arr
+}
+
+const getScale = (selectedArpeggios) => {
+
+  let key = getRandomKey()
+  let scaleTypes = getSelectedScaleTypes(selectedArpeggios)
+  let index = Math.floor(Math.random() * scaleTypes.length)
+  let scale = scaleTypes[index]
 
   let scaleNotes = []
   let scaleChords = {}
@@ -132,4 +157,4 @@ const getScale = (index, key) => {
   }
 }
 
-export { getRandomArpeggios }
+export { getRandomArpeggios, getAllScaleNames }
