@@ -5,4 +5,4 @@ A little web app to keep me practicing guitar during quarantine. Randomly genera
 Leverages [VuePack](https://github.com/egoist/vuepack).
 
 
-https://www.pianoscales.org/bebop.html
+https://guitar-practice-6fdc4.web.app/
